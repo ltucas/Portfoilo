@@ -1,4 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Phone Intro Screen Logic
+  const phoneIntro = document.getElementById("phoneIntro");
+  let introComplete = false;
+
+  window.enterPortfolio = function() {
+    if (introComplete) return;
+    introComplete = true;
+
+    // Add animation to phone
+    const phoneFrame = document.querySelector(".phone-frame");
+    phoneFrame.style.animation = "phoneZoomOut 0.6s ease-in forwards";
+
+    // Fade out the intro container
+    setTimeout(() => {
+      phoneIntro.classList.add("hidden");
+      // Trigger animation for portfolio content
+      document.querySelector("main").style.animation = "contentFadeIn 0.8s ease-in 0.2s forwards";
+      document.querySelector("nav").style.animation = "contentFadeIn 0.8s ease-in 0.2s forwards";
+    }, 400);
+  };
+
+  // Auto-hide intro screen after 5 seconds (optional)
+  // setTimeout(() => {
+  //   if (!introComplete) {
+  //     enterPortfolio();
+  //   }
+  // }, 5000);
+
   // Custom Cursor Logic
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorOutline = document.querySelector(".cursor-outline");
