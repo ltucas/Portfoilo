@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const phoneIntro = document.getElementById("phoneIntro");
   let introComplete = false;
 
-  window.enterPortfolio = function() {
+  window.enterPortfolio = function () {
     if (introComplete) return;
     introComplete = true;
 
