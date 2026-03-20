@@ -5,16 +5,62 @@
   <meta charset="UTF-8">
   <title>Lucas Thach - Portfolio (Advanced Theme)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  
+  <script>
+    // Initialize Theme
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
   <style>
+    :root {
+      --bg-base: #f1f5f9;
+      --bg-sidebar: #eef2f6;
+      --bg-content: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-bubble: #e2e8f0;
+      
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-subtle: #64748b;
+      
+      --accent: #0f172a; 
+      --accent-hover: #1db954; 
+      --accent-inv: #ffffff; 
+      
+      --grid-dot: #cbd5e1;
+      --border-line: #cbd5e1;
+    }
+
+    .dark {
+      --bg-base: #020617;
+      --bg-sidebar: #0f172a;
+      --bg-content: #020617;
+      --bg-card: #0f172a;
+      --bg-bubble: #1e293b;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      
+      --accent: #38bdf8; 
+      --accent-hover: #38bdf8; 
+      --accent-inv: #020617;
+      
+      --grid-dot: #1e293b;
+      --border-line: #334155;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f1f5f9;
-      color: #0f172a;
+      background-color: var(--bg-base);
+      color: var(--text-main);
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
     .sidebar {
@@ -23,29 +69,30 @@
       position: fixed;
       left: 0;
       top: 0;
-      background: #eef2f6;
+      background: var(--bg-sidebar);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 3.5rem;
       padding-bottom: 2rem;
-      border-right: 1.5px solid #cbd5e1;
+      border-right: 1.5px solid var(--border-line);
       z-index: 50;
-      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.03);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.4s ease, border-color 0.4s ease;
     }
 
     /* Main Content Setup */
     .main-content {
       margin-left: 340px;
       min-height: 100vh;
-      background-color: #f8fafc;
-      background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+      background-color: var(--bg-content);
+      background-image: radial-gradient(var(--grid-dot) 1.5px, transparent 1.5px);
       background-size: 26px 26px;
       padding: 6rem 8rem;
       display: flex;
       justify-content: center;
-      /* Horizontally center */
       position: relative;
+      transition: background-color 0.4s ease;
     }
 
     .content-wrapper {
@@ -58,29 +105,24 @@
       font-family: 'Pacifico', cursive;
       font-size: 4.5rem;
       text-align: center;
-      color: #f8fafc;
-      -webkit-text-stroke: 2px #0f172a;
+      color: var(--bg-base);
+      -webkit-text-stroke: 2px var(--accent);
       letter-spacing: 2px;
       line-height: 1.15;
       animation: floatLogo 6s ease-in-out infinite;
+      transition: -webkit-text-stroke 0.4s ease;
     }
 
     @keyframes floatLogo {
-
-      0%,
-      100% {
-        transform: translateY(0px) rotate(-1deg);
-      }
-
-      50% {
-        transform: translateY(-8px) rotate(1deg);
-      }
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
     }
 
     @keyframes fadeSlideDown {
       0% { opacity: 0; transform: translateY(-30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+
     @keyframes fadeSlideUp {
       0% { opacity: 0; transform: translateY(40px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -95,7 +137,6 @@
 
     .title-outline {
       color: transparent;
-      /* Text inside becomes transparent initially for typing effect trick */
       font-size: 3.5rem;
       position: relative;
       z-index: 10;
@@ -106,35 +147,22 @@
       display: inline-block;
       overflow: hidden;
       white-space: nowrap;
-      border-right: 3px solid #0f172a;
+      border-right: 3px solid var(--accent);
       width: 0;
-      color: #f8fafc;
-      -webkit-text-stroke: 2px #0f172a;
+      color: var(--bg-base);
+      -webkit-text-stroke: 2px var(--accent);
       font-weight: 800;
       animation: typing 2s steps(20, end) forwards, blink 0.8s step-end infinite;
     }
 
     @keyframes typing {
-      from {
-        width: 0;
-      }
-
-      to {
-        width: 100%;
-        border-color: transparent;
-      }
+      from { width: 0; }
+      to { width: 100%; border-color: transparent; }
     }
 
     @keyframes blink {
-
-      from,
-      to {
-        border-color: transparent
-      }
-
-      50% {
-        border-color: #0f172a;
-      }
+      from, to { border-color: transparent }
+      50% { border-color: var(--accent); }
     }
 
     .title-circle {
@@ -143,7 +171,7 @@
       left: -20px;
       right: -25px;
       bottom: -10px;
-      border: 2px solid #0f172a;
+      border: 2px solid var(--accent);
       border-radius: 50% 40% 60% 50%;
       opacity: 0;
       transform: rotate(-3deg);
@@ -154,9 +182,7 @@
     }
 
     @keyframes fadeInCircle {
-      to {
-        opacity: 0.8;
-      }
+      to { opacity: 0.8; }
     }
 
     .title-circle-static {
@@ -165,7 +191,7 @@
       left: -20px;
       right: -25px;
       bottom: -10px;
-      border: 2px solid #0f172a;
+      border: 2px solid var(--accent);
       border-radius: 50% 40% 60% 50%;
       opacity: 0.8;
       transform: rotate(-3deg);
@@ -183,7 +209,7 @@
     .line-extender {
       flex-grow: 1;
       height: 1.5px;
-      background: #0f172a;
+      background: var(--accent);
       opacity: 0.6;
       margin-left: 2rem;
       position: relative;
@@ -197,8 +223,8 @@
       transform: translateY(-50%) rotate(45deg);
       width: 12px;
       height: 12px;
-      border: 1.5px solid #0f172a;
-      background: #f8fafc;
+      border: 1.5px solid var(--accent);
+      background: var(--bg-content);
     }
 
     /* Navigation */
@@ -209,28 +235,30 @@
       border: 1.5px solid transparent;
       border-radius: 999px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.1rem;
-      color: #334155;
+      color: var(--text-muted);
       text-decoration: none;
     }
 
     .nav-btn:hover {
       background: rgba(15, 23, 42, 0.04);
-      color: #0f172a;
+      color: var(--text-main);
       transform: scale(1.05);
     }
 
     .nav-btn.active {
-      border-color: #0f172a;
-      color: #0f172a;
-      background: white;
+      border-color: var(--accent);
+      color: var(--text-main);
+      background: var(--bg-card);
       box-shadow: 3px 3px 0px rgba(15, 23, 42, 0.1);
     }
+    
+    .dark .nav-btn:hover { background: rgba(255, 255, 255, 0.05); }
 
     /* Socials */
     .social-icons a {
-      color: #0f172a;
+      color: var(--accent);
       transition: all 0.3s;
       display: block;
     }
@@ -242,10 +270,10 @@
 
     /* Spotify Bubble */
     .spotify-bubble {
-      border: 1.5px solid #0f172a;
+      border: 1.5px solid var(--accent);
       border-radius: 30px;
       padding: 0.5rem 1.25rem;
-      background: #e2e8f0;
+      background: var(--bg-bubble);
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -268,14 +296,12 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      border: 1.5px solid #0f172a;
+      border: 1.5px solid var(--accent);
       animation: spin 3s linear infinite;
     }
 
     @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
+      100% { transform: rotate(360deg); }
     }
 
     .spotify-bubble .record::after {
@@ -283,8 +309,8 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #f1f5f9;
-      border: 1.5px solid #0f172a;
+      background: var(--bg-sidebar);
+      border: 1.5px solid var(--accent);
     }
 
     /* Avatar */
@@ -303,8 +329,13 @@
       height: auto;
       object-fit: contain;
       position: relative;
-      /* mix-blend mode perfectly removes any leftover white anti-aliasing edges while keeping the transparent png look */
       mix-blend-mode: multiply;
+      transition: filter 0.4s ease;
+    }
+    
+    .dark .avatar-img {
+      mix-blend-mode: screen; 
+      filter: invert(1) hue-rotate(180deg);
     }
 
     /* Timeline */
@@ -312,7 +343,7 @@
       position: relative;
       padding-left: 3rem;
       margin-bottom: 3.5rem;
-      color: #1e293b;
+      color: var(--text-main);
     }
 
     .timeline-item::before {
@@ -322,13 +353,11 @@
       top: 0.75rem;
       bottom: -3.5rem;
       width: 1.5px;
-      background: #0f172a;
+      background: var(--accent);
       opacity: 0.4;
     }
 
-    .timeline-item:last-child::before {
-      display: none;
-    }
+    .timeline-item:last-child::before { display: none; }
 
     .timeline-item::after {
       content: '';
@@ -338,13 +367,13 @@
       width: 1rem;
       height: 1rem;
       border-radius: 50%;
-      border: 1.5px solid #0f172a;
-      background: #f8fafc;
+      border: 1.5px solid var(--accent);
+      background: var(--bg-content);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .timeline-item:hover::after {
-      background: #0f172a;
+      background: var(--accent);
       transform: scale(1.3);
     }
 
@@ -353,7 +382,7 @@
       padding-left: 1.5rem;
       font-size: 1.1rem;
       line-height: 1.6;
-      color: #475569;
+      color: var(--text-muted);
       margin-bottom: 0.75rem;
     }
 
@@ -362,16 +391,16 @@
       position: absolute;
       left: 0;
       top: 0;
-      color: #0f172a;
+      color: var(--accent);
       font-weight: bold;
     }
 
     /* Cards */
     .project-card {
-      border: 1.5px solid #0f172a;
+      border: 1.5px solid var(--accent);
       border-radius: 1.5rem;
       padding: 2.5rem;
-      background: white;
+      background: var(--bg-card);
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-decoration: none;
       color: inherit;
@@ -379,12 +408,11 @@
       flex-direction: column;
       height: 100%;
       position: relative;
-      overflow: hidden;
     }
 
     .project-card:hover {
       transform: translateY(-10px);
-      box-shadow: 8px 8px 0px #0f172a;
+      box-shadow: 8px 8px 0px var(--accent);
     }
 
     /* Scroll animations */
@@ -401,45 +429,27 @@
 
     /* Skills Pill */
     .skill-pill {
-      border: 1.5px solid #0f172a;
+      border: 1.5px solid var(--accent);
       border-radius: 999px;
       padding: 0.6rem 1.5rem;
       font-size: 1.05rem;
-      font-weight: 500;
+      font-weight: 600;
+      color: var(--text-main);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      background: white;
+      background: var(--bg-card);
       white-space: nowrap;
-      box-shadow: 2px 2px 0px rgba(15, 23, 42, 0.05);
+      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
     .skill-pill:hover {
-      background: #0f172a;
-      color: white;
+      background: var(--accent);
+      color: var(--accent-inv);
       transform: scale(1.05) translateY(-3px);
-      box-shadow: 4px 4px 0px rgba(15, 23, 42, 0.3);
+      box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
     }
 
-    @media (max-width: 1200px) {
-      .main-content {
-        padding: 4rem 4rem;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: static;
-        border-right: none;
-        border-bottom: 1.5px solid #d1d5db;
-        padding-bottom: 3rem;
-      }
-
-      .main-content {
-        margin-left: 0;
-        padding: 4rem 2rem;
-      }
-    }
+    .dark .skill-pill:hover { box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.2); }
+    .dark .project-card:hover { box-shadow: 8px 8px 0px var(--accent); }
 
     /* Splash Screen Animations */
     #splash-screen {
@@ -474,31 +484,52 @@
     }
     @keyframes splashBlink {
       from, to { border-color: transparent }
-      50% { border-color: #0f172a; }
+      50% { border-color: var(--accent); }
+    }
+
+    @media (max-width: 1200px) {
+      .main-content { padding: 4rem 4rem; }
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1.5px solid var(--border-line);
+        padding-bottom: 3rem;
+      }
+      .main-content { margin-left: 0; padding: 4rem 2rem 8rem 2rem; }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- Dark Mode Toggle Button -->
+  <button id="theme-toggle" class="fixed top-6 right-6 z-50 bg-[var(--bg-card)] backdrop-blur-md p-3 rounded-full shadow-[2px_2px_0px_var(--accent)] border border-[var(--accent)] transition-all hover:scale-110 !outline-none text-xl leading-none flex items-center justify-center">
+    🌓
+  </button>
+
+  <!-- Dynamic Project Preview Hover Image -->
+  <img id="floating-preview" src="" alt="Project Preview" class="fixed top-0 left-0 w-80 h-48 object-cover rounded-xl border-2 border-[var(--accent)] shadow-[6px_6px_0px_var(--accent)] pointer-events-none z-[100] transition-opacity duration-300" style="opacity: 0; transform: scale(0.9) translate(-50%, -50%); transform-origin: top left;">
+
   <!-- Splash Screen Intro -->
-  <div id="splash-screen" class="fixed inset-0 bg-[#f1f5f9] z-[9999] flex flex-col items-center justify-center overflow-hidden">
+  <div id="splash-screen" class="fixed inset-0 bg-[var(--bg-base)] z-[9999] flex flex-col items-center justify-center overflow-hidden">
     <!-- Character & Bubble -->
     <div class="relative flex flex-col items-center splash-character" style="opacity: 0; transform: translateY(50px);">
-      <!-- Speech bubble -->
-      <div class="splash-bubble absolute -top-12 -right-12 bg-white border-2 border-[#0f172a] rounded-2xl px-6 py-3 font-bold text-xl text-[#0f172a] shadow-[4px_4px_0px_#0f172a]" style="opacity: 0; transform: scale(0.8); transform-origin: bottom left;">
+      <div class="splash-bubble absolute -top-12 -right-12 bg-[var(--bg-card)] border-2 border-[var(--accent)] rounded-2xl px-6 py-3 font-bold text-xl text-[var(--accent)] shadow-[4px_4px_0px_var(--accent)]" style="opacity: 0; transform: scale(0.8); transform-origin: bottom left;">
         Hi!
-        <!-- Triangle pointing to character -->
-        <div class="absolute -bottom-3 left-6 w-0 h-0 border-l-[10px] border-l-transparent border-t-[12px] border-t-white border-r-[10px] border-r-transparent z-10"></div>
-        <div class="absolute -bottom-[16px] left-[22px] w-0 h-0 border-l-[12px] border-l-transparent border-t-[15px] border-t-[#0f172a] border-r-[12px] border-r-transparent"></div>
+        <div class="absolute -bottom-3 left-6 w-0 h-0 border-l-[10px] border-l-transparent border-t-[12px] border-t-[var(--bg-card)] border-r-[10px] border-r-transparent z-10"></div>
+        <div class="absolute -bottom-[16px] left-[22px] w-0 h-0 border-l-[12px] border-l-transparent border-t-[15px] border-t-[var(--accent)] border-r-[12px] border-r-transparent"></div>
       </div>
-      <!-- Avatar -->
-      <img src="boy_avatar_transparent.png" alt="Lucas Avatar" class="w-64 h-auto mix-blend-multiply">
+      <img src="boy_avatar_transparent.png" alt="Lucas Avatar" class="w-64 h-auto avatar-img">
     </div>
     
     <!-- Typing Name -->
     <div class="mt-8 h-[60px] flex items-center">
-      <div class="splash-name text-4xl md:text-5xl font-extrabold text-[#0f172a] tracking-tight relative overflow-hidden whitespace-nowrap border-r-4 border-[#0f172a]" style="width: 0; font-family: 'Inter', sans-serif;">
+      <div class="splash-name text-4xl md:text-5xl font-extrabold text-[var(--text-main)] tracking-tight relative overflow-hidden whitespace-nowrap border-r-4 border-[var(--accent)]" style="width: 0; font-family: 'Inter', sans-serif;">
         Lucas Thach
       </div>
     </div>
@@ -507,53 +538,51 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div style="animation: fadeSlideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0;">
-      <div class="logo mb-8">Lucas<br>Thach</div>
+      <div class="logo mb-6">Lucas<br>Thach</div>
     </div>
 
-    <div class="social-icons flex gap-6 mb-12" style="animation: fadeSlideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.15s;">
+    <div class="social-icons flex gap-6 mb-8" style="animation: fadeSlideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.15s;">
       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lucasthach21@gmail.com" target="_blank" aria-label="Email">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <rect width="20" height="16" x="2" y="4" rx="2" />
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
       </a>
       <a href="https://github.com/ltucas" target="_blank" aria-label="GitHub">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path
-            d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4" />
-        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4" /></svg>
       </a>
       <a href="https://www.linkedin.com/in/lucasluckythach/" target="_blank" aria-label="LinkedIn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-          <rect width="4" height="12" x="2" y="9" />
-          <circle cx="4" cy="4" r="2" />
-        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
       </a>
     </div>
 
-    <nav class="flex flex-col gap-5 text-center mb-8" style="animation: fadeSlideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.25s;">
+    <!-- Resume Download Button -->
+    <a href="resume.pdf" class="mb-10 px-6 py-2.5 text-[0.95rem] font-bold rounded-full border-[1.5px] border-[var(--accent)] hover:bg-[var(--accent)] text-[var(--accent)] hover:text-[var(--accent-inv)] transition-all text-center flex items-center gap-2 shadow-[3px_3px_0px_var(--accent)] hover:shadow-[5px_5px_0px_var(--accent)] hover:-translate-y-1" style="animation: fadeSlideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.2s;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Resume
+    </a>
+
+    <nav class="hidden lg:flex flex-col gap-5 text-center mb-8" style="animation: fadeSlideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.25s;">
       <a href="#about" class="nav-btn active">About</a>
       <a href="#experience" class="nav-btn">Experience</a>
       <a href="#projects" class="nav-btn">Coding Projects</a>
     </nav>
 
     <div class="avatar-wrapper" style="animation: fadeSlideUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; animation-delay: 0.35s;">
-      <a href="https://open.spotify.com/track/1aeRSlCn1EF7f5q7b5l6uu" target="_blank" class="spotify-bubble no-underline cursor-pointer" title="Listen to Lady by Avenoir">
+      <a id="spotify-link" href="https://open.spotify.com/track/1aeRSlCn1EF7f5q7b5l6uu" target="_blank" class="spotify-bubble no-underline cursor-pointer group" title="Listen on Spotify">
         <div class="record"></div>
         <div class="text-left">
-          <div class="text-[10px] text-slate-500 leading-none mb-[2px] font-semibold uppercase tracking-wide">Last
-            Played</div>
-          <div class="font-bold text-sm leading-tight text-slate-800 transition-colors hover:text-[#1db954]">Lady – Avenoir</div>
+          <div class="text-[10px] text-[var(--text-subtle)] leading-none mb-[2px] font-bold uppercase tracking-widest">Last Played</div>
+          <div id="spotify-title" class="font-extrabold text-sm leading-tight text-[var(--text-main)] transition-colors group-hover:text-[#1db954]">Lady – Avenoir</div>
         </div>
       </a>
-      <!-- Used the newly generated transparent PNG -->
-      <img src="boy_avatar_transparent.png" alt="Boy Avatar" class="avatar-img pointer-events-none">
+      <img src="boy_avatar_transparent.png" alt="Boy Avatar" class="avatar-img pointer-events-none mt-2">
     </div>
   </aside>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="lg:hidden fixed bottom-6 inset-x-4 bg-[var(--bg-card)]/90 backdrop-blur-xl border border-[var(--border-line)] z-[90] rounded-2xl flex justify-around p-3 shadow-[0px_4px_15px_rgba(0,0,0,0.1)]">
+    <a href="#about" class="text-sm font-extrabold text-[var(--text-main)] hover:text-[var(--accent)] p-2">About</a>
+    <a href="#experience" class="text-sm font-extrabold text-[var(--text-main)] hover:text-[var(--accent)] p-2">Experience</a>
+    <a href="#projects" class="text-sm font-extrabold text-[var(--text-main)] hover:text-[var(--accent)] p-2">Projects</a>
+  </nav>
 
   <!-- Main Content -->
   <main class="main-content">
@@ -569,25 +598,15 @@
           <div class="line-extender"></div>
         </div>
 
-        <div class="space-y-6 text-[#334155] text-[1.125rem] leading-[1.8] max-w-4xl fade-up">
+        <div class="space-y-6 text-[var(--text-muted)] text-[1.15rem] leading-[1.8] max-w-4xl fade-up">
           <p>
-            I study Information Technology at <strong
-              class="text-[#0f172a] font-semibold underline decoration-2 underline-offset-4 decoration-slate-300 hover:decoration-slate-500 transition-colors">York
-              University</strong>. My primary focus lies in Full-stack engineering—building robust end-to-end web
-            applications—but I'm increasingly fascinated by the practical applications of ML/AI architectures and making
-            them user-facing.
+            I study Information Technology at <strong class="text-[var(--text-main)] font-bold border-b-2 border-slate-300 hover:border-[var(--accent)] transition-colors cursor-pointer">York University</strong>. My primary focus lies in Full-stack engineering—building robust end-to-end web applications—but I'm increasingly fascinated by the practical applications of ML/AI architectures and making them user-facing.
           </p>
           <p>
-            When I'm not staring at a terminal or crushing problems on <a href="https://leetcode.com/u/ltucas/"
-              target="_blank"
-              class="text-[#0f172a] font-semibold underline decoration-2 underline-offset-4 decoration-slate-300 hover:decoration-slate-500 transition-colors">LeetCode</a>,
-            you'll probably find me designing platforms at hackathons or mentoring in robotics. I consider myself a born
-            problem solver with a deep curiosity for how systems operate under the hood, prioritizing shipping features
-            that are <strong class="text-[#0f172a] font-semibold">reliable, maintainable, and user-centric</strong>.
+            When I'm not staring at a terminal or crushing problems on <a href="https://leetcode.com/u/ltucas/" target="_blank" class="text-[var(--text-main)] font-bold border-b-2 border-slate-300 hover:border-[var(--accent)] transition-colors">LeetCode</a>, you'll probably find me designing platforms at hackathons or mentoring in robotics. I consider myself a born problem solver with a deep curiosity for how systems operate under the hood, prioritizing shipping features that are <strong class="text-[var(--text-main)] font-extrabold">reliable, maintainable, and user-centric</strong>.
           </p>
           <p>
-            This website serves as an ever-evolving digital garden to capture my growth as an engineer, and the passions
-            that fuel my coding spirit. Thanks for stopping by!
+            This website serves as an ever-evolving digital garden to capture my growth as an engineer, and the passions that fuel my coding spirit. Thanks for stopping by!
           </p>
         </div>
       </section>
@@ -596,61 +615,44 @@
       <section id="experience" class="mb-32 pt-10">
         <div class="title-line fade-up">
           <div class="title-wrapper">
-            <span class="title-outline"
-              style="-webkit-text-stroke: 2px #0f172a; color: #f8fafc; font-weight: 800; font-family: 'Inter', sans-serif;">Past,
-              Present, and Future</span>
-            <div class="title-circle-static"
-              style="left: -15px; right: -15px; top: -8px; bottom: -8px; border-radius: 60% 40% 50% 50%;"></div>
+            <span class="title-outline" style="-webkit-text-stroke: 2px var(--accent); color: var(--bg-base); font-weight: 800; font-family: 'Inter', sans-serif;">Past, Present, and Future</span>
+            <div class="title-circle-static" style="left: -15px; right: -15px; top: -8px; bottom: -8px; border-radius: 60% 40% 50% 50%;"></div>
           </div>
           <div class="line-extender"></div>
         </div>
 
         <div class="ml-2 mt-12 max-w-4xl">
-
           <!-- UofT Hacks -->
           <div class="timeline-item fade-up">
-            <div class="font-bold text-[1.25rem] mb-3">
-              Fall 2025 – Present <span class="mx-3 text-slate-300">|</span> Front-End Organizer <br class="md:hidden">@
-              <strong
-                class="text-[#0f172a] underline decoration-2 underline-offset-[3px] decoration-slate-300">UofTHacks</strong>
+            <div class="font-extrabold text-[1.25rem] mb-3">
+              Fall 2025 – Present <span class="mx-3 text-[var(--text-subtle)]">|</span> Front-End Organizer <br class="md:hidden">@ <strong class="text-[var(--text-main)] underline decoration-2 underline-offset-[3px] decoration-[var(--border-line)]">UofTHacks</strong>
             </div>
             <ul class="exp-bullets">
-              <li>Leading development of the hackathon's public-facing monolithic website visited by thousands of
-                developers.</li>
-              <li>Coordinating complete design updates and managing a streamlined CI/CD sprint cycle for the massive
-                annual event.</li>
+              <li>Leading development of the hackathon's public-facing monolithic website visited by thousands of developers.</li>
+              <li>Coordinating complete design updates and managing a streamlined CI/CD sprint cycle for the massive annual event.</li>
             </ul>
           </div>
 
           <!-- Magna -->
           <div class="timeline-item fade-up">
-            <div class="font-bold text-[1.25rem] mb-3">
-              2025 <span class="mx-3 text-slate-300">|</span> Software Engineering Intern <br class="md:hidden">@
-              <strong class="text-[#0f172a] underline decoration-2 underline-offset-[3px] decoration-slate-300">Magna
-                International</strong>
+            <div class="font-extrabold text-[1.25rem] mb-3">
+              2025 <span class="mx-3 text-[var(--text-subtle)]">|</span> Software Engineering Intern <br class="md:hidden">@ <strong class="text-[var(--text-main)] underline decoration-2 underline-offset-[3px] decoration-[var(--border-line)]">Magna International</strong>
             </div>
             <ul class="exp-bullets">
-              <li>Built and heavily optimized REST API integrations ensuring robust real-time data flow between apps and
-                backend services.</li>
-              <li>Automated internal tech workflows, significantly reducing manual developer effort and improving
-                efficiency.</li>
-              <li>Developed and maintained interactive front-end features for internal web applications using TypeScript
-                and React.</li>
+              <li>Built and heavily optimized REST API integrations ensuring robust real-time data flow between apps and backend services.</li>
+              <li>Automated internal tech workflows, significantly reducing manual developer effort and improving efficiency.</li>
+              <li>Developed and maintained interactive front-end features for internal web applications using TypeScript and React.</li>
             </ul>
           </div>
 
           <!-- Envision Robotics -->
           <div class="timeline-item border-none pb-0 fade-up">
-            <div class="font-bold text-[1.25rem] mb-3">
-              2024 <span class="mx-3 text-slate-300">|</span> Instructor <br class="md:hidden">@ <strong
-                class="text-[#0f172a] underline decoration-2 underline-offset-[3px] decoration-slate-300">Envision
-                Robotics</strong>
+            <div class="font-extrabold text-[1.25rem] mb-3">
+              2024 <span class="mx-3 text-[var(--text-subtle)]">|</span> Instructor <br class="md:hidden">@ <strong class="text-[var(--text-main)] underline decoration-2 underline-offset-[3px] decoration-[var(--border-line)]">Envision Robotics</strong>
             </div>
             <ul class="exp-bullets mt-3">
-              <li>Mentored 200+ students in advanced robotics, coding logic, and structural design over multiple
-                cohorts.</li>
-              <li>Designed hands-on STEM curriculums and proactively guided students through multiple complex
-                engineering setups.</li>
+              <li>Mentored 200+ students in advanced robotics, coding logic, and structural design over multiple cohorts.</li>
+              <li>Designed hands-on STEM curriculums and proactively guided students through multiple complex engineering setups.</li>
             </ul>
           </div>
         </div>
@@ -660,9 +662,7 @@
       <section id="projects" class="mb-32 pt-10">
         <div class="title-line fade-up">
           <div class="title-wrapper">
-            <span class="title-outline"
-              style="-webkit-text-stroke: 2px #0f172a; color: #f8fafc; font-weight: 800; font-family: 'Inter', sans-serif;">Coding
-              Projects</span>
+            <span class="title-outline" style="-webkit-text-stroke: 2px var(--accent); color: var(--bg-base); font-weight: 800; font-family: 'Inter', sans-serif;">Coding Projects</span>
             <div class="title-circle-static" style="left: -15px; right: -15px;"></div>
           </div>
           <div class="line-extender"></div>
@@ -670,32 +670,23 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-5xl">
           <!-- Project 1 -->
-          <a href="https://github.com/ltucas" target="_blank" class="project-card fade-up">
+          <a href="https://github.com/ltucas" target="_blank" class="project-card fade-up" data-image="code_quest_thumb.png">
             <div class="flex items-start justify-between mb-6">
-              <h3 class="font-bold text-[1.5rem] tracking-tight text-[#0f172a] leading-tight">Code Quest</h3>
-              <span
-                class="text-[0.7rem] font-bold uppercase tracking-wider px-3 py-1.5 rounded bg-[#f1f5f9] text-[#334155] border border-slate-200">Node
-                / Firebase</span>
+              <h3 class="font-extrabold text-[1.5rem] tracking-tight leading-tight">Code Quest</h3>
+              <span class="text-[0.7rem] font-bold uppercase tracking-wider px-3 py-1.5 rounded bg-[var(--bg-bubble)] text-[var(--text-main)] border border-[var(--border-line)]">Node / Firebase</span>
             </div>
-            <p class="text-[#475569] text-[1.05rem] leading-relaxed flex-grow">A sophisticated gamified programming
-              education platform heavily inspired by Duolingo. Features dynamic interactive coding challenges to keep
-              users engaged and learning continuously.</p>
-            <div class="mt-6 font-semibold text-sm text-[#0f172a] flex items-center gap-2">View Source <span
-                class="text-xl leading-none">→</span></div>
+            <p class="text-[var(--text-muted)] text-[1.05rem] leading-relaxed flex-grow">A sophisticated gamified programming education platform heavily inspired by Duolingo. Features dynamic interactive coding challenges to keep users engaged and learning continuously.</p>
+            <div class="mt-6 font-bold text-sm text-[var(--accent)] flex items-center gap-2">View Source <span class="text-xl leading-none">→</span></div>
           </a>
 
           <!-- Project 2 -->
-          <a href="https://github.com/ltucas" target="_blank" class="project-card fade-up delay-100">
+          <a href="https://github.com/ltucas" target="_blank" class="project-card fade-up delay-100" data-image="pokemon_engine_thumb.png">
             <div class="flex items-start justify-between mb-6">
-              <h3 class="font-bold text-[1.5rem] tracking-tight text-[#0f172a] leading-tight mr-2">Pokemon Engine</h3>
-              <span
-                class="text-[0.7rem] font-bold uppercase tracking-wider px-3 py-1.5 rounded bg-[#f1f5f9] text-[#334155] border border-slate-200">C++</span>
+              <h3 class="font-extrabold text-[1.5rem] tracking-tight leading-tight mr-2">Pokemon Engine</h3>
+              <span class="text-[0.7rem] font-bold uppercase tracking-wider px-3 py-1.5 rounded bg-[var(--bg-bubble)] text-[var(--text-main)] border border-[var(--border-line)]">C++</span>
             </div>
-            <p class="text-[#475569] text-[1.05rem] leading-relaxed flex-grow">Custom highly-performant game engine
-              engineered for building Pokemon-style RPG experiences. Includes turn-based combat, map exploration
-              mechanics, and complex state management.</p>
-            <div class="mt-6 font-semibold text-sm text-[#0f172a] flex items-center gap-2">View Source <span
-                class="text-xl leading-none">→</span></div>
+            <p class="text-[var(--text-muted)] text-[1.05rem] leading-relaxed flex-grow">Custom highly-performant game engine engineered for building Pokemon-style RPG experiences. Includes turn-based combat, map exploration mechanics, and complex state management.</p>
+            <div class="mt-6 font-bold text-sm text-[var(--accent)] flex items-center gap-2">View Source <span class="text-xl leading-none">→</span></div>
           </a>
         </div>
       </section>
@@ -704,8 +695,7 @@
       <section id="skills" class="mb-32 pt-10">
         <div class="title-line fade-up">
           <div class="title-wrapper">
-            <span class="title-outline"
-              style="-webkit-text-stroke: 2px #0f172a; color: #f8fafc; font-weight: 800; font-family: 'Inter', sans-serif;">Arsenal</span>
+            <span class="title-outline" style="-webkit-text-stroke: 2px var(--accent); color: var(--bg-base); font-weight: 800; font-family: 'Inter', sans-serif;">Arsenal</span>
           </div>
           <div class="line-extender"></div>
         </div>
@@ -739,39 +729,75 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Intersection Observer for scroll animations
+      // 1. Scroll Animations
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // fade in only once
+            observer.unobserve(entry.target); 
           }
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
       document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-      // Update active nav link on scroll
+      // 2. Active Nav Link Tracking
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('.nav-btn');
-
       window.addEventListener('scroll', () => {
         let current = '';
         sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          if (scrollY >= sectionTop - 250) {
-            current = section.getAttribute('id');
-          }
+          if (scrollY >= section.offsetTop - 250) current = section.getAttribute('id');
         });
         navLinks.forEach(link => {
           link.classList.remove('active');
-          if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-          }
+          if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
         });
       });
+
+      // 3. Dark Mode Toggle
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      });
+
+      // 4. Project Hover Analytics (Floating Images)
+      const previewImg = document.getElementById('floating-preview');
+      const cards = document.querySelectorAll('.project-card');
+
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const src = card.getAttribute('data-image');
+          if(src) {
+            previewImg.src = src;
+            previewImg.style.opacity = '1';
+            // Offset exactly mapping to cursor
+            previewImg.style.transform = `translate(${e.clientX + 30}px, ${e.clientY + 20}px) scale(1)`;
+          }
+        });
+        card.addEventListener('mouseleave', () => {
+          previewImg.style.opacity = '0';
+          previewImg.style.transform = 'scale(0.9)';
+        });
+      });
+
+      // 5. Live Spotify Data Fetch
+      async function fetchSpotify() {
+        try {
+          const res = await fetch('/api/spotify');
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data && data.title) {
+            document.getElementById('spotify-title').innerText = data.title + ' – ' + data.artist;
+            if (data.songUrl) document.getElementById('spotify-link').href = data.songUrl;
+          }
+        } catch(e) {
+          console.log("Spotify Fetch Error: ", e);
+        }
+      }
+      fetchSpotify();
+      setInterval(fetchSpotify, 120000); // Check every 2 minutes
     });
   </script>
 </body>
-
 </html>
